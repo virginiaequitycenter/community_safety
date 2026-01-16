@@ -1,0 +1,106 @@
+---
+title: "Community Safety Dashboard - Storyboard"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: rows
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(tidyverse)
+```
+
+Instructions {data-icon="fa-info-circle"}
+=============================================
+
+Row {data-height=100}
+-------------------------------------
+
+### How to use this dashboard
+
+Instructions...
+
+Row {data-height=600}
+-------------------------------------
+   
+### A collective toll
+
+Plot: injuries + deaths compared to 911 calls 
+
+Data used: GVA incidents + local police data
+
+Caption: plot summary
+    
+### What does community safety mean to you?
+
+Add summary of goals...
+
+Data {.storyboard data-icon="fa-chart-line"}
+=============================================
+
+### Gun violence is an epidemic that affects all ages 
+
+Plot: population plot of ages of participants involved 
+
+***
+
+Data: GVA participants 
+
+Caption: plot summary 
+
+### The long term harm 
+
+Plot: rate of ED visits over time 
+
+Data: VDH ED visits
+
+Caption: plot summary
+
+***
+
+Injuries from gun violence...
+
+### The role of mental health
+
+Plot: waffle chart showing prevalence of firearm suicide + caption with summary
+
+Data: VDH deaths by intent
+
+***
+
+The leading cause of death by gun violence in the Blue Ridge Health District is [suicide](https://communitypartnerships.github.io/local-gun-violence/policy-briefs/suicide-and-firearms.html "Problem Brief: Suicide and Firearms"), which made up 76% of all firearm-related deaths from 2018 to 2022. This mirrors national patterns, where more than 60% of gun deaths are by suicide.
+
+Table: suicide rates by race, age, sex, ethnicity 
+
+### Cultivating youth success
+
+Plot: chronic absenteeism
+
+***
+The importance of school...
+
+About {data-icon="fa-magnifying-glass"}
+===================================
+
+Row {data-height=200}
+-------------------------------------
+
+### Get involved
+
+- Request a data walk 
+- Participate in a quarterly community dialogue
+
+Row {data-height=200}
+-------------------------------------
+
+### Learn more about the Community Safety Working Group 
+
+More info about the CSIG/President's Council ...
+
+Row {data-height=200}
+-------------------------------------
+
+### See additional resources
+
+- Full data document
+- Github 
