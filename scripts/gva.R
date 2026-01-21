@@ -13,8 +13,9 @@ library(tidyverse)
 
 # Download ----
 user <- redivis$user("thetrace")
-# Will change with each download, copy from Rediviz workspace
-dataset <- user$dataset("x_va_gva:245r:v2_7")
+# Will change with each download, copy from Rediviz workspace:
+# https://redivis.com/datasets/245r-2cw07j71y
+dataset <- user$dataset("x_va_gva:245r:v2_8")
 table <- dataset$table("va_gva:z2zk")
 
 # Load:
@@ -79,7 +80,7 @@ participants <- read_csv("data/gva_participants.csv")
 ### 3.1 - Average age over time 
 
 # 1 - Incidents over time 
-# 1.1 Number of incidents in Charlottesville and Albemarle ----
+# *1.1 Number of incidents in Charlottesville and Albemarle ----
 
 # Grouped by quarter -- more visual noise, but shows seasonal changes
 local_counts_qtr <- incidents %>%
@@ -89,10 +90,12 @@ local_counts_qtr <- incidents %>%
   count(quarter, name = "quarter_count")
 
 local_counts_qtr %>%
+  filter(quarter < as.Date("2026-01-01")) %>%
   ggplot(aes(quarter, quarter_count)) +
   geom_point() +
   geom_line() +
-  geom_smooth()
+  geom_smooth() +
+  labs(title = "Number of incidents in Cville/Alb by Quarter")
 
 # Grouped by year -- Less visual noise, but doesn't show seasonal trends 
 local_counts_yr <- incidents %>%
@@ -101,12 +104,14 @@ local_counts_yr <- incidents %>%
   count(incident_year, name = "n_year")
 
 local_counts_yr %>%
+  filter(incident_year != 2026) %>%
   ggplot(aes(incident_year, n_year, group = 1)) +
   geom_point() +
   geom_line() +
-  geom_smooth()
+  geom_smooth() +
+  labs(title = "Number of incidents in Cville/Alb by Year")
 
-# 1.2 Incident rates in Charlottesville and Albemarle compared to VA ----
+# *1.2 Incident rates in Charlottesville and Albemarle compared to VA ----
 
 library(tidycensus)
 # Notes on populations over the years: 
@@ -203,14 +208,21 @@ local_counts <- incidents %>%
 
 rates <- bind_rows(va_counts, local_counts) %>%
   left_join(pops) %>%
-  mutate(rate = (n_year / pop) * 100000)
+  mutate(
+    pop = case_when(
+      yr == 2025 & region == "Virginia" ~ 8879000,
+      yr == 2025 & region == "Cville and Albemarle" ~ 164134,
+      TRUE ~ pop),
+    rate = (n_year / pop) * 100000)
 
 rates %>%
   ggplot(aes(yr, rate, colour = region)) +
   geom_line() +
   geom_point() +
-  scale_y_continuous(limits = c(0, NA))
-
+  scale_y_continuous(limits = c(0, NA)) +
+  theme(legend.position = "bottom") +
+  labs(title = "Incident rates per 100k pop")
+  
 # 1.3 Incident characteristics ----
 
 local_char <- incidents %>%
@@ -233,7 +245,7 @@ last_yr <- incidents %>%
 pct_change <- (nrow(ytd) - nrow(last_yr)) / nrow(last_yr) * 100
 
 # 2 - Victims over time: 
-# 2.1 Number of victims and their statuses in Cville ----
+# *2.1 Number of victims and their statuses in Cville ----
 
 # Monthly
 local_victims <- incidents %>%
@@ -247,7 +259,9 @@ local_victims <- incidents %>%
 
 local_victims %>%
   ggplot(aes(month_yr, value, fill = name)) +
-  geom_col()
+  geom_col() +
+  labs(title = "Number of victims by month in Cville/Alb") +
+  theme(legend.position = "bottom")
 
 # Annually 
 local_victims_yr <- incidents %>%
@@ -261,9 +275,11 @@ local_victims_yr <- incidents %>%
 
 local_victims_yr %>%
   ggplot(aes(incident_year, value, fill = name)) +
-  geom_col()
+  geom_col() +
+  labs(title = "Number of victims by year in Cville/Alb") +
+  theme(legend.position = "bottom")
 
-# 2.2 Victimization rates compared to VA ----
+# *2.2 Victimization rates compared to VA ----
 
 va_victims_yr <- incidents %>%
   filter(incident_date >= "2017-01-01") %>%
@@ -281,18 +297,25 @@ victim_rates <- victims %>%
   mutate(total_victims = total_killed + total_injured)
   
 rates <- victim_rates %>%
-  mutate(kill_rate = (total_killed / pop) * 100000,
-         injured_rate = (total_injured / pop) * 100000,
-         vic_rate = (total_victims / pop) * 100000)
+  mutate(
+    pop = case_when(
+      incident_year == 2025 & region == "Virginia" ~ 8879000,
+      incident_year == 2025 & region == "Cville and Albemarle" ~ 164134,
+      TRUE ~ pop),
+    kill_rate = (total_killed / pop) * 100000,
+    injured_rate = (total_injured / pop) * 100000,
+    vic_rate = (total_victims / pop) * 100000)
 
 rates %>%
   ggplot(aes(incident_year, vic_rate, colour = region)) +
   geom_point() +
   geom_line() +
-  scale_y_continuous(limits = c(0, NA))
+  scale_y_continuous(limits = c(0, NA)) +
+  labs(title = "Victimization rates per 100k pop") +
+  theme(legend.position = "bottom")
 
 # 3 - Participant demographics (age, gender, role):
-# 3.1 - Average age over time by role ----
+# 3.1 Average age over time by role ----
 
 local_ages <- participants %>%
   filter(str_detect(city_or_county, "Charlottesville"),
@@ -317,5 +340,97 @@ ages %>%
   geom_point() +
   geom_line(show.legend = F) +
   facet_wrap(~ region) +
-  scale_y_continuous(limits = c(0, NA))
-  
+  scale_y_continuous(limits = c(0, NA)) +
+  labs(title = "Averge age of participants") +
+  theme(legend.position = "bottom")
+
+# 3.2 Youth participant roles per pop ----
+
+va_youth <- participants %>%
+  filter(incident_date >= "2017-01-01",
+         !duplicated(id),
+         age_group == "Teen 12-17" | age_group == "Child 0-11") %>%
+  mutate(region = "Virginia")
+
+local_youth <- va_youth %>%
+  filter(city_or_county == "Charlottesville") %>%
+  mutate(region = "Cville and Albemarle")
+
+youth <- rbind(va_youth, local_youth) %>%
+  select(incident_year, type, age, age_group, region) %>%
+  group_by(yr = incident_year, type, region) %>%
+  count() %>%
+  left_join(pops) %>%
+  mutate(
+    pop = case_when(
+      yr == 2025 & region == "Virginia" ~ 8879000,
+      yr == 2025 & region == "Cville and Albemarle" ~ 164134,
+      TRUE ~ pop),
+    rate = (n / pop) * 100000)
+
+youth %>%
+  ggplot(aes(yr, rate, color = type)) +
+  geom_point() +
+  geom_line() +
+  facet_wrap( ~ region) +
+  scale_y_continuous(limits = c(0, NA)) +
+  labs(title = "Rate of youth participation per 100k pop",
+       subtitle = "rate = (N unique participants < 18 / total pop) * 100,000") +
+  theme(legend.position = "bottom")
+
+# 3.3 Percent youth participation ----
+
+n_youth <- rbind(va_youth, local_youth) %>%
+  select(incident_year, type, age, age_group, region) %>%
+  count(yr = incident_year, region, name = "n_youth")
+
+n_incidents <- bind_rows(va_counts, local_counts)
+
+pct_youth <- left_join(n_youth, n_incidents) %>%
+  mutate(pct_youth = (n_youth / n_year) * 100)
+
+pct_youth %>%
+  ggplot(aes(yr, pct_youth, color = region)) +
+  geom_point() +
+  geom_line() +
+  scale_y_continuous(limits = c(0, NA)) +
+  labs(title = "Percent of incidents involving youth") +
+  theme(legend.position = "bottom")
+
+# 3.4 Ages of participants in Cville and Albemarle ----
+
+local_ps <- participants %>%
+  filter(incident_date >= "2017-01-01",
+         str_detect(city_or_county, "Charlottesville"),
+         !duplicated(id)) 
+
+# 97 ps dropped bc age is NA
+local_ps %>%
+  count(is.na(age))
+
+age_dat <- local_ps %>%
+  drop_na(age) %>%
+  mutate(grp = case_when(
+           age <= 9 ~ "0-9",
+           age > 9 & age <= 14 ~ "10-14", 
+           age > 14 & age <= 17 ~ "15-17",
+           age > 17 & age <= 19 ~ "18-19",
+           age > 19 & age <= 24 ~ "20-24",
+           age > 24 & age <= 30 ~ "25-30",
+           age > 30 & age <= 35 ~ "31-35",
+           age > 35 & age <= 45 ~ "36-45",
+           age > 45 & age <= 55 ~ "46-55",
+           age > 55 & age <= 65 ~ "56-65",
+           age > 65 & age <= 75 ~ "66-75",
+           age > 75 ~ "76+")) %>%
+  group_by(type, grp) %>%
+  count() %>%
+  mutate(pyr = ifelse(type == "victim", -n, n))
+
+age_dat %>%
+  ggplot(aes(pyr, grp, fill = type)) +
+  geom_col() +
+  scale_x_continuous(labels = abs) +
+  coord_cartesian(xlim = c(-max(age_dat$n), max(age_dat$n))) +
+  labs(title = "Ages of participants in Cville/Alb") +
+  theme(legend.position = "bottom")

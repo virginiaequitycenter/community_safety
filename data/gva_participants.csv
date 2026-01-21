@@ -28044,9 +28044,6 @@ incident_year,incident_date,id,type,name,age,age_group,gender,status,relationshi
 2024,2024-09-06,3018335,victim,NA,NA,Adult 18+,male,Injured,NA,Norfolk
 2024,2024-01-24,2810339,perpetrator,NA,NA,Adult 18+,male,Unharmed,NA,Chesapeake
 2024,2024-10-14,N/A,None: None,NA,NA,NA,NA,NA,NA,Colonial Heights
-2025,2025-04-06,3178884,victim,NA,NA,Adult 18+,male,Injured,NA,Winchester
-2025,2025-04-06,3178885,perpetrator,NA,16,Teen 12-17,male,Unharmed,Family,Winchester
-2025,2025-04-06,3178885,perpetrator,NA,16,Teen 12-17,male,Arrested,Family,Winchester
 2025,2025-10-19,3336310,victim,NA,NA,Adult 18+,male,Injured,NA,Crozet
 2025,2025-10-19,3336311,perpetrator,Roger Lamb,35,Adult 18+,male,Unharmed,NA,Crozet
 2025,2025-10-19,3336311,perpetrator,Roger Lamb,35,Adult 18+,male,Arrested,NA,Crozet
@@ -28612,7 +28609,6 @@ incident_year,incident_date,id,type,name,age,age_group,gender,status,relationshi
 2025,2025-05-05,3203465,victim,Emily Grace Keene,24,Adult 18+,female,Killed,NA,Henry
 2025,2025-08-11,3288122,victim,Cynthia Johnson,34,Adult 18+,female,Killed,NA,Richmond
 2025,2025-10-29,3344097,victim,Malcolm W. Moore,26,Adult 18+,male,Killed,NA,Norfolk
-2025,2025-11-11,3354027,victim,Danielle Callahan,41,Adult 18+,female,Killed,NA,Richmond
 2025,2025-04-18,3210417,victim,Kevin Scott Small,NA,Adult 18+,male,Killed,NA,Shipman
 2025,2025-04-18,3210418,perpetrator,Katelynn Ann Hipes,22,Adult 18+,female,Unharmed,NA,Shipman
 2025,2025-04-18,3210418,perpetrator,Katelynn Ann Hipes,22,Adult 18+,female,Arrested,NA,Shipman
@@ -28635,7 +28631,6 @@ incident_year,incident_date,id,type,name,age,age_group,gender,status,relationshi
 2025,2025-09-15,3309699,perpetrator,Muhammad Muzammil,25,Adult 18+,male,Unharmed,NA,Herndon
 2025,2025-09-15,3309699,perpetrator,Muhammad Muzammil,25,Adult 18+,male,Arrested,NA,Herndon
 2025,2025-07-23,3270930,victim,Spirit Pryer,27,Adult 18+,female,Killed,NA,Newport News
-2025,2025-01-26,3125238,victim,Jahaanz Wilson,22,Adult 18+,male,Killed,NA,Charlottesville
 2025,2025-06-22,3243835,victim,NA,NA,Adult 18+,female,Killed,NA,Petersburg
 2025,2025-06-22,3243836,perpetrator,Emmil Bradley,45,Adult 18+,male,Unharmed,NA,Petersburg
 2025,2025-06-22,3243836,perpetrator,Emmil Bradley,45,Adult 18+,male,Arrested,NA,Petersburg
@@ -28650,7 +28645,6 @@ incident_year,incident_date,id,type,name,age,age_group,gender,status,relationshi
 2025,2025-09-05,3324294,victim,Travis Lamont Coleman,34,Adult 18+,male,Killed,NA,Hopewell
 2025,2025-09-05,3324295,perpetrator,Johnnie Terrell McGhee,42,Adult 18+,male,Unharmed,NA,Hopewell
 2025,2025-09-05,3324295,perpetrator,Johnnie Terrell McGhee,42,Adult 18+,male,Arrested,NA,Hopewell
-2025,2025-06-01,3224258,victim,Naseem Kariem King,18,Adult 18+,male,Killed,NA,Richmond
 2025,2025-04-30,3199581,victim,NA,NA,Adult 18+,male,Killed,NA,Richmond
 2025,2025-09-11,3306135,victim,Yhuri Vashon Brinkle,30,Adult 18+,male,Killed,NA,Chesapeake
 2025,2025-05-11,3208397,victim,NA,NA,Adult 18+,male,Killed,NA,Petersburg
@@ -29196,14 +29190,6 @@ incident_year,incident_date,id,type,name,age,age_group,gender,status,relationshi
 2025,2025-06-01,3225377,perpetrator,Juwan Montel Baker,26,Adult 18+,male,Arrested,NA,Danville
 2025,2025-06-01,3225378,perpetrator,Tyliek Niem Hanks,26,Adult 18+,male,Unharmed,NA,Danville
 2025,2025-06-01,3225378,perpetrator,Tyliek Niem Hanks,26,Adult 18+,male,Arrested,NA,Danville
-2025,2025-08-12,3333505,victim,Crystal Galloway Jordan,39,Adult 18+,female,Killed,NA,Martinsville
-2025,2025-08-12,3333506,victim,NA,29,Adult 18+,male,Injured,NA,Martinsville
-2025,2025-08-12,3333507,perpetrator,Nashawn Lee Corbett,NA,Adult 18+,male,Unharmed,NA,Martinsville
-2025,2025-08-12,3333507,perpetrator,Nashawn Lee Corbett,NA,Adult 18+,male,Arrested,NA,Martinsville
-2025,2025-08-12,3333508,perpetrator,Micah Aaron Holmes,NA,Adult 18+,male,Unharmed,NA,Martinsville
-2025,2025-08-12,3333508,perpetrator,Micah Aaron Holmes,NA,Adult 18+,male,Arrested,NA,Martinsville
-2025,2025-08-12,3333509,perpetrator,Kwaheim Zaquon Hairston,NA,Adult 18+,male,Unharmed,NA,Martinsville
-2025,2025-08-12,3333509,perpetrator,Kwaheim Zaquon Hairston,NA,Adult 18+,male,Arrested,NA,Martinsville
 2025,2025-06-10,3244383,victim,Monica Rodriguez,24,Adult 18+,female,Killed,NA,Hampton
 2025,2025-06-10,3244384,victim,NA,NA,Adult 18+,male,Injured,NA,Hampton
 2025,2025-06-10,3244385,perpetrator,Eric Fleet,25,Adult 18+,male,Unharmed,NA,Hampton
@@ -29766,7 +29752,6 @@ incident_year,incident_date,id,type,name,age,age_group,gender,status,relationshi
 2025,2025-11-25,3390795,perpetrator,Daquan Jerome Henderson,NA,Adult 18+,NA,Unharmed,NA,Chesapeake
 2025,2025-11-25,3390795,perpetrator,Daquan Jerome Henderson,NA,Adult 18+,NA,Arrested,NA,Chesapeake
 2021,2021-07-05,3369780,victim,Tafari “Trey” Nadhim,30,Adult 18+,male,Killed,NA,Alexandria
-2026,2026-01-01,3387558,victim,Jeremiah Cuffee,19,Adult 18+,male,Killed,NA,Virginia Beach
 2026,2026-01-06,3390190,perpetrator,Conner Peltzer,30,Adult 18+,male,Killed,NA,Leesburg
 2025,2025-12-18,3389209,victim,David Vaughter,52,Adult 18+,male,Killed,NA,Lynchburg
 2025,2025-12-18,3389210,perpetrator,John Levi Snead,63,Adult 18+,male,Unharmed,NA,Lynchburg
@@ -29787,7 +29772,6 @@ incident_year,incident_date,id,type,name,age,age_group,gender,status,relationshi
 2025,2025-12-27,3384996,victim,Porshia Williams,34,Adult 18+,male,Killed,NA,Richmond
 2025,2025-12-27,3384997,perpetrator,NA,NA,Adult 18+,male,Unharmed,NA,Richmond
 2020,2020-04-08,3388439,victim,Curtis Walton,33,Adult 18+,male,Killed,NA,Portsmouth
-2025,2025-12-15,3376507,victim,NA,NA,Adult 18+,male,Killed,NA,Petersburg
 2025,2025-12-16,3377504,victim,Travis Logan-Baker,35,Adult 18+,male,Killed,NA,Richmond
 2014,2014-01-01,3382558,victim,Ricky Allen Holbrook,46,Adult 18+,male,Killed,NA,Castlewood
 2014,2014-01-01,3382559,perpetrator,Carlos Crabtree Jr,NA,Adult 18+,male,Unharmed,NA,Castlewood
@@ -29926,10 +29910,42 @@ incident_year,incident_date,id,type,name,age,age_group,gender,status,relationshi
 2026,2026-01-08,3392166,victim,Darryl Timothy Hines,38,Adult 18+,male,Killed,NA,Henrico
 2026,2026-01-09,3392408,victim,NA,NA,Adult 18+,male,Killed,NA,Alexandria
 2026,2026-01-09,3392172,victim,NA,NA,Adult 18+,male,Injured,NA,Richmond
-2026,2026-01-09,3392420,victim,NA,NA,Adult 18+,female,Injured,NA,Harrisonburg
 2026,2026-01-07,3392184,victim,David Robert Clements,NA,Adult 18+,male,Injured,NA,Faulconerville
 2026,2026-01-07,3392185,perpetrator,NA,NA,Adult 18+,NA,Unharmed,NA,Faulconerville
 2026,2026-01-07,3392185,perpetrator,NA,NA,Adult 18+,NA,Arrested,NA,Faulconerville
 2026,2026-01-08,3392117,victim,NA,NA,Adult 18+,female,Injured,NA,Charlottesville
 2026,2026-01-08,3392118,perpetrator,Mark A Murphy Jr,40,Adult 18+,male,Unharmed,Significant others - current or former,Charlottesville
 2026,2026-01-08,3392118,perpetrator,Mark A Murphy Jr,40,Adult 18+,male,Arrested,Significant others - current or former,Charlottesville
+2025,2025-06-01,3394751,victim,Naseem Kariem King,18,Adult 18+,male,Killed,NA,Richmond
+2025,2025-06-01,3394752,perpetrator,Troy Jefferson,19,Adult 18+,male,Unharmed,NA,Richmond
+2025,2025-06-01,3394752,perpetrator,Troy Jefferson,19,Adult 18+,male,Arrested,NA,Richmond
+2025,2025-06-01,3394753,perpetrator,Rahmel Tyshawn Stewart,20,Adult 18+,male,Unharmed,NA,Richmond
+2025,2025-06-01,3394753,perpetrator,Rahmel Tyshawn Stewart,20,Adult 18+,male,Arrested,NA,Richmond
+2026,2026-01-01,3394718,victim,Jeremiah Cuffee,19,Adult 18+,male,Killed,NA,Virginia Beach
+2026,2026-01-01,3394719,perpetrator,De’Vion Williams,19,Adult 18+,male,Unharmed,NA,Virginia Beach
+2026,2026-01-01,3394719,perpetrator,De’Vion Williams,19,Adult 18+,male,Arrested,NA,Virginia Beach
+2025,2025-11-11,3396987,victim,Danielle Callahan,41,Adult 18+,female,Killed,NA,Richmond
+2025,2025-11-11,3396988,perpetrator,Lenza Terry Jr,NA,Adult 18+,male,Unharmed,NA,Richmond
+2025,2025-11-11,3396988,perpetrator,Lenza Terry Jr,NA,Adult 18+,male,Arrested,NA,Richmond
+2025,2025-12-15,3395798,victim,NA,NA,Adult 18+,male,Killed,NA,Petersburg
+2025,2025-12-15,3395799,perpetrator,Jeffrey Rhodes-Barner,51,Adult 18+,male,Unharmed,NA,Petersburg
+2025,2025-12-15,3395799,perpetrator,Jeffrey Rhodes-Barner,51,Adult 18+,male,Arrested,NA,Petersburg
+2025,2025-01-26,3395377,victim,Jahaanz Wilson,22,Adult 18+,male,Killed,NA,Charlottesville
+2025,2025-01-26,3395378,perpetrator,Tyquan Markie Dean,20,Adult 18+,male,Unharmed,NA,Charlottesville
+2025,2025-01-26,3395378,perpetrator,Tyquan Markie Dean,20,Adult 18+,male,Arrested,NA,Charlottesville
+2025,2025-04-06,3394486,victim,NA,NA,Adult 18+,male,Injured,NA,Winchester
+2025,2025-04-06,3394487,perpetrator,NA,16,Teen 12-17,male,Unharmed,Family,Winchester
+2025,2025-04-06,3394487,perpetrator,NA,16,Teen 12-17,male,Arrested,Family,Winchester
+2025,2025-08-12,3393835,victim,Crystal Galloway Jordan,39,Adult 18+,female,Killed,NA,Martinsville
+2025,2025-08-12,3393836,victim,NA,29,Adult 18+,male,Injured,NA,Martinsville
+2025,2025-08-12,3393837,perpetrator,Nashawn Lee Corbett,NA,Adult 18+,male,Unharmed,NA,Martinsville
+2025,2025-08-12,3393837,perpetrator,Nashawn Lee Corbett,NA,Adult 18+,male,Arrested,NA,Martinsville
+2025,2025-08-12,3393838,perpetrator,Micah Aaron Holmes,NA,Adult 18+,male,Unharmed,NA,Martinsville
+2025,2025-08-12,3393838,perpetrator,Micah Aaron Holmes,NA,Adult 18+,male,Arrested,NA,Martinsville
+2025,2025-08-12,3393839,perpetrator,Kwaheim Zaquon Hairston,NA,Adult 18+,male,Unharmed,NA,Martinsville
+2025,2025-08-12,3393839,perpetrator,Kwaheim Zaquon Hairston,NA,Adult 18+,male,Arrested,NA,Martinsville
+2026,2026-01-11,3393769,victim,NA,25,Adult 18+,male,Injured,NA,Alexandria
+2026,2026-01-13,3395408,victim,NA,17,Teen 12-17,male,Injured,NA,Hopewell
+2026,2026-01-14,3396401,victim,NA,17,Teen 12-17,male,Injured,NA,Newport News
+2026,2026-01-15,3396243,victim,James Henry Chadwell,57,Adult 18+,male,Injured,NA,Dungannon
+2026,2026-01-15,3396244,perpetrator,Joshua Paul Durham,28,Adult 18+,male,Arrested,Family,Dungannon
