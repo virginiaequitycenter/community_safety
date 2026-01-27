@@ -1,0 +1,5 @@
+patient_health_district,intent_of_injury,firearm_deaths,rate_of_firearm_deaths_per_100k_pop,years
+Blue Ridge,Undetermined/legal/war,2,0.2,2018-2022
+Blue Ridge,Suicide,107,8.3,2018-2022
+Blue Ridge,Homicide,31,2.4,2018-2022
+Blue Ridge,Unintentional,1,0.1,2018-2022

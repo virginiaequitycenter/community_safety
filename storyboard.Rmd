@@ -38,6 +38,16 @@ Add summary of goals...
 Data {.storyboard data-icon="fa-chart-line"}
 =============================================
 
+### The rates of gun vary over time 
+
+Plot: victimization rates 
+
+***
+
+Data: GVA incidents 
+
+Caption: plot summary 
+
 ### Gun violence is an epidemic that affects all ages 
 
 Plot: population plot of ages of participants involved 

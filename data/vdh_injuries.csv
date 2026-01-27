@@ -1,0 +1,34 @@
+year,locality,firearm_injury_visits,total_ed_visits,rate_of_firearm_injuries_per_10k_ed_visits
+2015,Albemarle County and Charlottesville City,31,47487,6.5
+2020,Albemarle County and Charlottesville City,29,34875,8.3
+2022,Albemarle County and Charlottesville City,23,51989,4.4
+2023,Albemarle County and Charlottesville City,35,54833,6.4
+2025,Albemarle County and Charlottesville City,28,57056,4.9
+2018,Albemarle County and Charlottesville City,25,50027,5
+2017,Albemarle County and Charlottesville City,28,51747,5.4
+2021,Albemarle County and Charlottesville City,18,46637,3.9
+2024,Albemarle County and Charlottesville City,29,55578,5.2
+2019,Albemarle County and Charlottesville City,22,50827,4.3
+2016,Albemarle County and Charlottesville City,30,49498,6.1
+2017,Blue Ridge,50,96673,5.2
+2022,Blue Ridge,49,97648,5
+2024,Blue Ridge,39,106117,3.7
+2023,Blue Ridge,49,103706,4.7
+2021,Blue Ridge,33,88209,3.7
+2025,Blue Ridge,44,108763,4
+2015,Blue Ridge,46,86860,5.3
+2016,Blue Ridge,56,90169,6.2
+2019,Blue Ridge,44,94466,4.7
+2020,Blue Ridge,48,68658,7
+2018,Blue Ridge,46,92463,5
+2015,Virginia,1115,2267476,4.91736185961836
+2016,Virginia,1445,2685014,5.381722404426942
+2017,Virginia,1531,3177732,4.8179015725681085
+2018,Virginia,1005,1957157,5.134999389420471
+2019,Virginia,1463,2614791,5.595093451063584
+2020,Virginia,2325,2788389,8.338147941338171
+2021,Virginia,1638,2020429,8.107189116766786
+2022,Virginia,2469,3428973,7.200406652370841
+2023,Virginia,2093,3321544,6.301286389703102
+2024,Virginia,1145,2023252,5.659206070227535
+2025,Virginia,1835,3823287,4.799535059753557
