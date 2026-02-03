@@ -118,7 +118,7 @@ library(tidycensus)
 # - 2017:2023 available via ACS-5 year estimates
 # - 2020 available through the decennial census 
 # - 2024 available through Population Estimates via get_estimate()
-# - 2025 is not yet available, may need to estimate ourselves? ~8,879,000, 45,434, 118,700
+# - 2025 is not yet available on city/county level, may need to estimate ourselves? ~ 45,434, 118,700
 
 acs_years <- c(2017:2019, 2021:2023)
 
@@ -188,8 +188,33 @@ local_est_24 <- get_estimates(
   summarise(pop = sum(pop)) %>%
   mutate(region = "Cville and Albemarle")
 
-pops <- bind_rows(va_acs, local_acs, va_dec, local_dec, va_est_24, local_est_24) %>%
+va_est_25 <- get_estimates(
+  geography = "state",
+  product = "population",
+  state = "VA",
+  year = 2025,
+  vintage = 2025) %>%
+  filter(variable == "POPESTIMATE") %>%
+  select(region = NAME, pop = value, yr = year)
+
+# local_est_25 <- get_estimates(
+#   geography = "county",
+#   product = "population",
+#   state = "VA",
+#   county = c(540, 003),
+#   year = 2025,
+#   vintage = 2025) %>%
+#   filter(variable == "POPESTIMATE") %>%
+#   select(region = NAME, pop = value, yr = year) %>%
+#   group_by(yr) %>%
+#   summarise(pop = sum(pop)) %>%
+#   mutate(region = "Cville and Albemarle")
+
+pops <- bind_rows(va_acs, local_acs, va_dec, local_dec, va_est_24, local_est_24, va_est_25) %>%
+  add_row(region = "Cville and Albemarle", pop = 164134, yr = 2025) %>%
   arrange(yr)
+
+write_csv(pops, "data/acs_pops.csv")
 
 va_counts <- incidents %>%
   filter(incident_date >= "2017-01-01") %>%
@@ -209,11 +234,9 @@ local_counts <- incidents %>%
 rates <- bind_rows(va_counts, local_counts) %>%
   left_join(pops) %>%
   mutate(
-    pop = case_when(
-      yr == 2025 & region == "Virginia" ~ 8879000,
-      yr == 2025 & region == "Cville and Albemarle" ~ 164134,
-      TRUE ~ pop),
     rate = (n_year / pop) * 100000)
+
+#write_csv(rates, "data/acs_rates.csv")
 
 rates %>%
   ggplot(aes(yr, rate, colour = region)) +
@@ -298,10 +321,6 @@ victim_rates <- victims %>%
   
 rates <- victim_rates %>%
   mutate(
-    pop = case_when(
-      incident_year == 2025 & region == "Virginia" ~ 8879000,
-      incident_year == 2025 & region == "Cville and Albemarle" ~ 164134,
-      TRUE ~ pop),
     kill_rate = (total_killed / pop) * 100000,
     injured_rate = (total_injured / pop) * 100000,
     vic_rate = (total_victims / pop) * 100000)
@@ -362,10 +381,6 @@ youth <- rbind(va_youth, local_youth) %>%
   count() %>%
   left_join(pops) %>%
   mutate(
-    pop = case_when(
-      yr == 2025 & region == "Virginia" ~ 8879000,
-      yr == 2025 & region == "Cville and Albemarle" ~ 164134,
-      TRUE ~ pop),
     rate = (n / pop) * 100000)
 
 youth %>%

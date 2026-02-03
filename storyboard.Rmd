@@ -1,5 +1,5 @@
 ---
-title: "Community Safety Dashboard - Storyboard"
+title: "Community Safety Dashboard"
 output: 
   flexdashboard::flex_dashboard:
     orientation: rows
@@ -7,7 +7,47 @@ output:
 
 ```{r setup, include=FALSE}
 library(flexdashboard)
+library(plotly)
+library(reactablefmtr)
 library(tidyverse)
+library(waffle)
+
+# Data
+incidents <- read_csv("data/gva_incidents.csv")
+participants <- read_csv("data/gva_participants.csv")
+pops <- read_csv("data/acs_pops.csv")
+vdh_injuries <- read_csv("data/vdh_injuries.csv")
+absenteeism <- read_csv("data/chronic_absenteeism.csv")
+gv <- read_csv("data/police_gv.csv")
+gva <- read_csv("data/gva_incidents.csv")
+
+# Palettes:
+
+# - Sequential 1 color (tables)
+# - Qualitative:
+#   - 2 color: victim status (killed/injured), victim role (defendent/victim), locality (local/va)
+#   - 3 color: absenteeism 
+#   - 4 color: deaths by intent
+
+
+orange_pal <- c("#fff2e6", "#ffb54d") 
+
+ec_colors <- c("Elementary" = "#232D4B", 
+               "Middle" = "#007BAB",
+               "High" = "#F8BE3D")
+
+
+```
+
+```{=html}
+<style>
+p.comment {
+background-color: #d8e6ef;
+padding: 10px;
+margin-left: 25px;
+border-radius: 5px;
+}
+</style>
 ```
 
 Instructions {data-icon="fa-info-circle"}
@@ -16,55 +56,227 @@ Instructions {data-icon="fa-info-circle"}
 Row {data-height=100}
 -------------------------------------
 
-### How to use this dashboard
+### **How to use this dashboard**
 
-Instructions...
+Click through the stories on the Data tab to see how different sources contribute to the narrative of community safety and gun violence in our region. 
+
+The numbers presented here each represent part of a story. By bringing them together, and in conversation with our community, we hope to collectively tell a fuller story. 
 
 Row {data-height=600}
 -------------------------------------
    
-### A collective toll
+### **A collective toll**
 
-Plot: injuries + deaths compared to 911 calls 
+```{r victim_counts}
 
-Data used: GVA incidents + local police data
+gv_plt <- gv %>%
+  mutate(month_year = floor_date(reported_date, unit = "month")) %>%
+  group_by(month_year) %>%
+  count(name = "n_reports")
 
-Caption: plot summary
+gva_plt <- gva %>%
+  filter(between(incident_date, mdy("01-01-2019"), mdy("12-31-2025")),
+         str_detect(city_or_county, "Charlottesville")) %>%
+  mutate(month_year = floor_date(incident_date, unit = "month")) %>%
+  group_by(month_year) %>%
+  summarise(total_injured = sum(total_injured),
+            total_killed = sum(total_killed)) %>%
+  ungroup() %>%
+  pivot_longer(matches("total"))
+
+ggplot() +
+  geom_col(data = gva_plt, aes(x = month_year, y = value, fill = name), width = 25) +
+  stat_smooth(data = gv_plt, aes(x = month_year, y = n_reports), se = FALSE, span = .2, color = "#2f9aa0ff") +
+  labs(x = NULL,
+       y = "Monthly Counts",
+       title = "Incidents of Gun Violence and Victim Statuses by Month", 
+       caption = "Data Source: Gun Violence Archive & Local Police Reports") +
+  scale_y_continuous(breaks = c(2, 4, 6, 8, 10, 12, 14, 16, 18)) +
+  scale_x_date(date_breaks = "6 months", date_labels = "%b '%y", date_minor_breaks="1 month") +
+  scale_fill_manual(labels = c("Injured", "Killed"),
+                    values = c("#440154FF", "#7AD151FF"),
+                    guide = guide_legend(title = "Victim Status")) +
+  theme_minimal() +
+  theme(legend.position = "bottom",
+        axis.title.y = element_text(face = "bold"),
+        legend.title = element_text(face = "bold"),
+        axis.text.x = element_text(angle = 35),
+        panel.grid.major.x = element_line(size = 1.5)) +
+  annotate("label", x = mdy("11-1-2018"), y = 5.5, 
+           label = paste("Gun-related 911 calls\n(ex. shots fired or assaults)"),
+           size = 2) +
+  geom_segment(aes(x = mdy("7-1-2018"), y = 6.7, xend = mdy("12-20-2018"), yend = 7.8),
+               arrow = arrow(length = unit(0.20, "cm"))) +
+  geom_vline(xintercept = mdy("3-12-2020"), linetype = "dotted", size = 0.75) +
+  annotate("label", x = mdy("11-15-2020"), y = 9, label = "COVID lockdown", size = 2) +
+  geom_segment(aes(x = mdy("7-1-2020"), y = 9.6, xend = mdy("4-1-2020"), yend = 10.5),
+               arrow = arrow(length = unit(0.2, "cm"))) +
+  annotate("label", x = mdy("2-15-2022"), y = 19, label = paste(
+    "Hearing or witnessing gun violence takes\na collective toll on our entire community"),
+    size = 2) +
+  geom_segment(aes(x = mdy("11-15-2020"), y = 19, xend = mdy("7-15-2020"), yend = 17.9),
+               arrow = arrow(length = unit(0.2, "cm")))
+
+```
+
     
-### What does community safety mean to you?
+### **What does community safety mean to you?**
 
-Add summary of goals...
+This graph shows the number of victims of gun violence in Charlottesville and Albemarle, by month, and whether they were injured or killed. The height of each bar represents the number of individuals directly harmed. The dark purple bars show the number of people injured, and the green bars shows the number of people that lost their lives each month. The blue line above the bars shows the total number of verified incidents, such as shots fired. Although the number of injuries and deaths varies month-to-month, the number of incidents remains relatively high, especially following COVID in 2020.
+
+The harm of gun violence takes many forms – deaths and injuries are the most obvious, but the collective trauma of hearing or witnessing gunshots also erodes community safety. This report aims to clarify current knowledge, as well as knowledge gaps, to support community solutions. Each source of data tells a part of the story, and by bringing these sources together we hope to tell a broader story about the nature, shape, and impacts of gun violence in our community. The broader goal is to expand and support the voices in our community working to identify solutions.
 
 Data {.storyboard data-icon="fa-chart-line"}
 =============================================
 
-### The rates of gun vary over time 
+### The rates of gun violence vary over time
 
-Plot: victimization rates 
+```{r victimization_rates}
+
+va_victims_yr <- incidents %>%
+  filter(incident_date >= "2017-01-01") %>%
+  group_by(incident_year) %>%
+  summarise(total_killed = sum(total_killed),
+            total_injured = sum(total_injured)) %>%
+  pivot_longer(matches("total")) %>%
+  mutate(region = "Virginia")
+
+local_victims_yr <- incidents %>%
+  filter(str_detect(city_or_county, "Charlottesville"),
+         incident_date >= "2017-01-01") %>%
+  group_by(incident_year) %>%
+  summarise(total_killed = sum(total_killed),
+            total_injured = sum(total_injured)) %>%
+  pivot_longer(matches("total")) %>%
+  mutate(region = "Cville and Albemarle")
+
+victims <- bind_rows(local_victims_yr, va_victims_yr)
+
+victim_rates <- victims %>%
+  left_join(pops, by = c("incident_year" = "yr", "region" = "region")) %>%
+  pivot_wider(names_from = name, values_from = value) %>%
+  mutate(total_victims = total_killed + total_injured)
+  
+rates <- victim_rates %>%
+  mutate(
+    pop = case_when(
+      incident_year == 2025 & region == "Virginia" ~ 8879000,
+      incident_year == 2025 & region == "Cville and Albemarle" ~ 164134,
+      TRUE ~ pop),
+    kill_rate = (total_killed / pop) * 100000,
+    injured_rate = (total_injured / pop) * 100000,
+    vic_rate = (total_victims / pop) * 100000)
+
+rates %>%
+  ggplot(aes(incident_year, vic_rate, colour = region)) +
+  geom_point() +
+  geom_line() +
+  scale_y_continuous(limits = c(0, NA)) +
+  labs(title = "Victimization rates per 100k pop",
+       caption = "Data Source: Gun Violence Archive") +
+  theme(legend.position = "bottom")
+
+```
 
 ***
 
-Data: GVA incidents 
-
-Caption: plot summary 
+Explain why this is important...
 
 ### Gun violence is an epidemic that affects all ages 
 
-Plot: population plot of ages of participants involved 
+```{r age_ranges}
+
+local_ps <- participants %>%
+  filter(incident_date >= "2017-01-01",
+         str_detect(city_or_county, "Charlottesville"),
+         !duplicated(id)) %>%
+  mutate(type = case_when(
+    type == "perpetrator" ~ "defendant",
+    TRUE ~ type
+  ))
+
+# 97 ps dropped bc age is NA
+# local_ps %>%
+#   count(is.na(age))
+
+age_dat <- local_ps %>%
+  drop_na(age) %>%
+  mutate(grp = case_when(
+           age <= 9 ~ "0-9",
+           age > 9 & age <= 14 ~ "10-14", 
+           age > 14 & age <= 17 ~ "15-17",
+           age > 17 & age <= 19 ~ "18-19",
+           age > 19 & age <= 24 ~ "20-24",
+           age > 24 & age <= 30 ~ "25-30",
+           age > 30 & age <= 35 ~ "31-35",
+           age > 35 & age <= 45 ~ "36-45",
+           age > 45 & age <= 55 ~ "46-55",
+           age > 55 & age <= 65 ~ "56-65",
+           age > 65 & age <= 75 ~ "66-75",
+           age > 75 ~ "76+")) %>%
+  group_by(type, grp) %>%
+  count() %>%
+  mutate(pyr = ifelse(type == "victim", -n, n))
+
+age_dat %>%
+  ggplot(aes(pyr, grp, fill = type)) +
+  geom_col() +
+  scale_x_continuous(labels = abs) +
+  coord_cartesian(xlim = c(-max(age_dat$n), max(age_dat$n))) +
+  labs(title = "Ages of participants in Cville/Alb",
+       caption = "Data Source: Gun Violence Archive") +
+  theme(legend.position = "bottom")
+
+```
 
 ***
 
-Data: GVA participants 
-
-Caption: plot summary 
+Explain why this is important... 
 
 ### The long term harm 
 
-Plot: rate of ED visits over time 
+```{r ed_rates}
 
-Data: VDH ED visits
+names(vdh_injuries) <- gsub("_", " ", names(vdh_injuries)) %>%
+  str_to_title() %>%
+  gsub("Ed", "ED", .)
 
-Caption: plot summary
+# vdh_injuries %>%
+#   filter(Locality == "Albemarle County and Charlottesville City") %>%
+#   select(-Locality) %>%
+#   arrange(Year) %>%
+#   reactable(
+#     defaultColDef = colDef(
+#       align = "center",
+#       headerStyle = list(background = "#f7f7f8"),
+#       minWidth = 50
+#     ),
+#     columns = list(
+#       "Total ED Visits" = colDef(format = colFormat(separators = TRUE)),
+#       "Rate Of Firearm Injuries Per 10k ED Visits" = colDef(style = color_scales(
+#         vdh_injuries, colors = orange_pal)),
+#       Locality = colDef(minWidth = 100)
+#     ),
+#     bordered = TRUE,
+#     highlight = TRUE,
+#     pagination = FALSE
+#   ) %>%
+#   add_source("Data Source: Virginia Department of Health Firearm-Related ED Visits",
+#              align = "right",
+#              font_size = 11) %>%
+#   add_title("Firearm-Related Emergency Department Visits in Charlottesville & Albemarle")
+
+vdh_injuries %>%
+  filter(Locality != "Blue Ridge") %>%
+  ggplot(aes(Year, `Rate Of Firearm Injuries Per 10k ED Visits`, color = Locality)) +
+  geom_point() +
+  geom_line() +
+  scale_x_continuous(breaks = scales::breaks_width(1)) +
+  scale_y_continuous(limits = c(0, NA)) +
+  labs(title = "Firearm Injury Hospitalization Rates") +
+  theme(legend.position = "bottom")
+
+```
 
 ***
 
@@ -72,9 +284,36 @@ Injuries from gun violence...
 
 ### The role of mental health
 
-Plot: waffle chart showing prevalence of firearm suicide + caption with summary
+```{r waffle}
+vdh_intent <- read_csv("data/vdh_deaths.csv") %>%
+  rename(intent = intent_of_injury) %>%
+  mutate(intent = case_when(intent == "Undetermined/legal/war" ~ "Undetermined or \nPolice Intervention",
+                            intent == "Unintentional" ~ "Accidental",
+                            TRUE ~ intent))
 
-Data: VDH deaths by intent
+vdh_parts <- vdh_intent %>%
+  select(intent, firearm_deaths) %>%
+  arrange(desc(firearm_deaths)) %>%
+  mutate(intent_fct = fct_inorder(intent))
+
+vdh_parts %>%
+  ggplot(aes(label = intent_fct, values = firearm_deaths)) +
+  geom_pictogram(n_rows = 6, size = 10, aes(colour = intent_fct), flip = FALSE, make_proportional = FALSE) +
+  scale_color_manual(
+    values = c("#440154FF", "#FDE725FF", "#7AD151FF", "#2f9aa0ff")) +
+  scale_label_pictogram(
+    values = c("male")) +
+  theme_void() +
+  theme(legend.position = "bottom",
+        legend.text = element_text(face = "bold"),
+        legend.title=element_blank()) +
+  labs(title = "Firearm-Related Deaths in the Blue Ridge Health District 2018-2022",
+       caption = "Data source: Centers for Disease Control, Underlying Cause of Death 2018-2022")
+
+
+```
+
+
 
 ***
 
@@ -84,7 +323,33 @@ Table: suicide rates by race, age, sex, ethnicity
 
 ### Cultivating youth success
 
-Plot: chronic absenteeism
+```{r absenteeism}
+
+all <- absenteeism %>%
+  filter(subgroup == "All Students") %>%
+  group_by(division, school_year, school_level) %>%
+  summarise(percent = mean(percent)) %>%
+  mutate(
+    division = case_when(
+      division == "ACPS" ~ "Albemarle County", 
+      division == "CCS" ~ "Charlottesville City"),
+    school_year = str_sub(school_year, start = -4))
+
+ggplot(all, aes(x = school_year, y = percent, colour = school_level, group = school_level)) +
+  geom_point() +
+  geom_path(size = 1) +
+  facet_wrap(~division) +
+  scale_y_continuous(labels = function(x) paste0(x, "%")) +
+  scale_color_manual(values = ec_colors, breaks = c("Elementary", "Middle", "High")) +
+  labs(y = "Rate of Chronic Absenteeism",
+       x = "School Year",
+       color = "School Level", 
+       title = "Rates of Chronic Absenteeism in Cville & Albemarle Public Schools") +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 25, vjust = .7))
+
+```
+
 
 ***
 The importance of school...
